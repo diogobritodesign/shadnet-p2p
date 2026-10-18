@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN git clone --recursive https://github.com/Wozzardman/shadnet-p2p.git /src
 WORKDIR /src
 RUN cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build --parallel
-RUN mkdir -p /opt/shadnet && cp build/shadnet build/worlds.cfg build/scoreboards.cfg /opt/shadnet/
+RUN cmake -G Ninja -S clientsample -B clientsample/build -DCMAKE_BUILD_TYPE=Release && cmake --build clientsample/build --parallel
+RUN mkdir -p /opt/shadnet && cp build/shadnet build/worlds.cfg build/scoreboards.cfg clientsample/build/shadnet-sample /opt/shadnet/
 
 FROM debian:trixie
 RUN apt-get update && apt-get install -y --no-install-recommends \
